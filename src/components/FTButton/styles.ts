@@ -1,8 +1,9 @@
 import styled from 'styled-components/native';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 
 import { theme } from '../../theme';
 
-import FTText from '../FTText';
+import { FTText } from '../FTText';
 
 export type ButtonVariant = 'cta' | 'destructive';
 export type ButtonType = 'primary' | 'secondary' | 'tertiary';
@@ -18,11 +19,20 @@ export interface ButtonStyleProps extends SharedStyledProps {
   width: ButtonWidth;
 }
 
-function getBgColor(
-  variant: ButtonVariant,
-  type: ButtonType,
-  disabled: boolean,
-) {
+function getWidth({ width }: ButtonStyleProps) {
+  switch (width) {
+    case 'small':
+      return `${theme.spacing.s(148)}px`;
+    case 'medium':
+      return `${theme.spacing.s(296)}px`;
+    case 'large':
+      return `${theme.spacing.s(296)}px`;
+    default:
+      return '9999px'; // aparentemente 100% não funciona (possivelmente em scrollview)
+  }
+}
+
+function getBgColor({ variant, type, disabled }: SharedStyledProps) {
   if (type === 'primary') {
     if (disabled) {
       return theme.palette.disabled.main;
@@ -38,11 +48,7 @@ function getBgColor(
   return theme.palette.secondary.main;
 }
 
-function getBorder(
-  variant: ButtonVariant,
-  type: ButtonType,
-  disabled: boolean,
-) {
+function getBorder({ variant, type, disabled }: SharedStyledProps) {
   if (type !== 'secondary') {
     return 'none';
   }
@@ -58,11 +64,7 @@ function getBorder(
   return `2px solid ${theme.palette.secondary.main}`;
 }
 
-function getTextColor(
-  variant: ButtonVariant,
-  type: ButtonType,
-  disabled: boolean,
-) {
+function getTextColor({ variant, type, disabled }: SharedStyledProps) {
   if (disabled) {
     return theme.palette.dark.light;
   }
@@ -79,20 +81,30 @@ function getTextColor(
 
 export const TouchableOpacity = styled.TouchableOpacity<ButtonStyleProps>`
   max-width: 100%;
-  height: ${theme.spacing.vs(48)}px;
+  min-height: ${theme.spacing.mvs(48)}px;
+  width: ${getWidth};
+  padding: ${theme.spacing.vs(8)}px ${theme.spacing.s(16)}px;
   border-radius: 8px;
   justify-content: center;
   align-items: center;
-  border: ${({ variant, type, disabled }) =>
-    getBorder(variant, type, disabled)};
-  background-color: ${({ variant, type, disabled }) =>
-    getBgColor(variant, type, disabled)};
+  border: ${getBorder};
+  background-color: ${getBgColor};
+  flex-direction: row;
+`;
+
+export const Icon = styled(FeatherIcon).attrs((props: SharedStyledProps) => {
+  return {
+    size: theme.spacing.mvs(14),
+    color: getTextColor(props),
+  };
+})<SharedStyledProps>`
+  margin-right: ${theme.spacing.s(4)}px;
 `;
 
 export const ButtonLabel = styled(FTText).attrs({
-  size: 'small',
+  size: 'description',
 })<SharedStyledProps>`
   text-transform: uppercase;
-  color: ${({ variant, type, disabled }) =>
-    getTextColor(variant, type, disabled)};
+  color: ${getTextColor};
+  text-align: center;
 `;

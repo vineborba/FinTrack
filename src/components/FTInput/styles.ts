@@ -1,20 +1,26 @@
-import { TextInput as RNTextInput } from 'react-native';
+import { TextInput as RNTextInput, ColorValue } from 'react-native';
 import styled from 'styled-components/native';
+import FeatherIcon from 'react-native-vector-icons/Feather';
 
-import FTText from '../FTText';
+import { FTText } from '../FTText';
 
 import { theme } from '../../theme';
 
 export type InputWidth = 'small' | 'medium' | 'large' | 'full';
 
-export interface StyleProps {
-  error: boolean;
+interface SharedStyleProps {
   focused: boolean;
+  error: boolean;
   success: boolean;
+}
+
+export interface StyleProps extends SharedStyleProps {
   width: InputWidth;
 }
 
-const getInputWidth = (width: string) => {
+type LabelStyleProps = Pick<SharedStyleProps, 'error' | 'success'>;
+
+const getInputWidth = ({ width }: StyleProps) => {
   if (width === 'small') {
     return theme.spacing.s(96);
   }
@@ -30,7 +36,7 @@ const getInputWidth = (width: string) => {
   return theme.spacing.s(288);
 };
 
-const getBorderColor = (focused: boolean, error: boolean, success: boolean) => {
+const getBorderColor = ({ error, focused, success }: SharedStyleProps) => {
   if (error) {
     return theme.palette.error.main;
   }
@@ -46,21 +52,38 @@ const getBorderColor = (focused: boolean, error: boolean, success: boolean) => {
   return theme.palette.light.main;
 };
 
-export const TextInput = styled(RNTextInput)<StyleProps>`
+const getLabelColor = ({ error, success }: LabelStyleProps) => {
+  if (error) {
+    return theme.palette.error.main;
+  }
+
+  if (success) {
+    return theme.palette.success.main;
+  }
+
+  return theme.palette.dark.light;
+};
+
+export const TextInput = styled(RNTextInput).attrs((props: StyleProps) => ({
+  placeholderTextColor: () => {
+    console.log(getLabelColor(props));
+
+    return getLabelColor(props) as ColorValue;
+  },
+}))<StyleProps>`
   max-width: 100%;
-  width: ${({ width }) => getInputWidth(width)}px;
-  height: ${theme.spacing.vs(48)}px;
+  width: ${getInputWidth}px;
+  height: ${theme.spacing.vs(40)}px;
   padding: ${theme.spacing.vs(4)}px ${theme.spacing.s(8)}px;
 
   background-color: ${({ editable }) =>
-    editable ? theme.palette.white.main : theme.palette.disabled.main};
+    editable ? theme.palette.white.main : theme.palette.secondary.light};
 
   color: ${theme.palette.dark.main};
-  font-size: ${theme.typography.fontSize.medium}px;
+  font-size: ${theme.typography.fontSize.description}px;
 
   border-radius: 8px;
-  border-color: ${({ focused, error, success }) =>
-    getBorderColor(focused, error, success)};
+  border-color: ${getBorderColor};
   border-width: 1px;
 `;
 
@@ -70,18 +93,24 @@ export const InputContainer = styled.View`
 `;
 
 export const SecureTextButton = styled.TouchableOpacity`
-  height: ${theme.spacing.vs(32)}px;
-  width: ${theme.spacing.s(32)}px;
-  left: ${theme.spacing.s(-40)}px;
-  margin: ${theme.spacing.vs(4)}px;
   justify-content: center;
   align-items: center;
-`;
-
-export const InputLabel = styled(FTText)`
-  padding-left: ${theme.spacing.s(8)}px;
+  right: ${theme.spacing.s(16)}px;
+  position: absolute;
 `;
 
 export const ContentWrapper = styled.View``;
 
-export const Text = styled(FTText)``;
+export const LabelCotainer = styled.View`
+  height: ${() => 1.2 * theme.typography.fontSize.description}px;
+`;
+
+export const InputLabel = styled(FTText)<LabelStyleProps>`
+  padding-left: ${theme.spacing.s(8)}px;
+  color: ${getLabelColor};
+`;
+
+export const Icon = styled(FeatherIcon).attrs((props: SharedStyleProps) => ({
+  color: getBorderColor(props),
+  size: theme.spacing.vs(16),
+}))<SharedStyleProps>``;

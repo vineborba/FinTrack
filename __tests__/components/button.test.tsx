@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 
-import FTButton from '../../src/components/FTButton';
+import { FTButton } from '../../src/components/FTButton';
 
 describe('FTbutton', () => {
   it('should render the default button', () => {

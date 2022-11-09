@@ -1,4 +1,4 @@
-import React, { useContext, useCallback, useMemo } from 'react';
+import { useContext, useCallback, useMemo, createContext } from 'react';
 
 import { Entry, INewEntry } from '../schemas/Entry';
 import EntryContext from '../contexts/RealmContext';
@@ -11,11 +11,8 @@ interface ContextValue {
   createEntry: (newEntry: INewEntry) => void;
 }
 
-const EntriesContext = React.createContext<ContextValue>({
-  createEntry: (newEntry: INewEntry) => {
-    // TODO pensar em algo pra usar newEntry sem console log
-    console.log(newEntry);
-  },
+const EntriesContext = createContext<ContextValue>({
+  createEntry: () => {},
 });
 
 const { useRealm } = EntryContext;

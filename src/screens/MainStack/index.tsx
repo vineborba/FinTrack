@@ -1,4 +1,3 @@
-import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { EntriesProvider } from '../../providers/EntriesProvider';
@@ -12,7 +11,10 @@ const MainStack = createNativeStackNavigator<MainStackParamList>();
 
 function Main() {
   return (
-    <MainStack.Navigator initialRouteName="Home">
+    <MainStack.Navigator
+      initialRouteName="Home"
+      screenOptions={{ headerShown: false }}
+    >
       <MainStack.Screen name="Home" component={Home} />
       <MainStack.Screen name="Tutorial">
         {() => (

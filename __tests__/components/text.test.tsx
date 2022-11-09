@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, within } from '@testing-library/react-native';
 
-import FTText from '../../src/components/FTText';
+import { FTText } from '../../src/components/FTText';
 
 describe('FTText', () => {
   it('should render a <Text /> with content', () => {

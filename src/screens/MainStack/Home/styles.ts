@@ -1,18 +1,18 @@
 import { StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { theme } from '../../../theme';
+import { ScrollView } from '../Tutorial/styles';
 
-export const Container = styled(SafeAreaView)`
+export const Container = styled(ScrollView)`
   flex: 1;
-  align-items: center;
-  padding: 0px ${theme.spacing.s(16)}px;
+  padding: ${theme.spacing.vs(16)}px ${theme.spacing.s(16)}px;
 `;
 
 export const Content = styled.View`
   margin-top: ${theme.spacing.vs(16)}px;
-  padding: 0px ${theme.spacing.s(8)}px;
+  flex: 1;
+  padding: ${theme.spacing.vs(16)}px ${theme.spacing.s(8)}px;
 `;
 
 export const styles = StyleSheet.create({

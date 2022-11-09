@@ -1,12 +1,12 @@
-import React, { useReducer, useRef } from 'react';
+import { useReducer, useRef } from 'react';
 import { Animated } from 'react-native';
 
 import { useEntries } from '../../../providers/EntriesProvider';
 
-import FTInput from '../../../components/FTInput';
-import FTCurrencyInput from '../../../components/FTCurrencyInput';
-import FTText from '../../../components/FTText';
-import FTButton from '../../../components/FTButton';
+import { FTInput } from '../../../components/FTInput';
+import { FTCurrencyInput } from '../../../components/FTCurrencyInput';
+import { FTText } from '../../../components/FTText';
+import { FTButton } from '../../../components/FTButton';
 import { Container, ScrollView, styles } from './styles';
 
 import { ActionType, initialState, reducer } from './reducer';

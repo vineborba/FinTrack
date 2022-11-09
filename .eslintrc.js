@@ -5,6 +5,7 @@ module.exports = {
     'plugin:react/recommended',
     'airbnb',
     'airbnb-typescript',
+    'plugin:react/jsx-runtime',
     'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',

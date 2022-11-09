@@ -1,36 +1,38 @@
-import { RFValue } from 'react-native-responsive-fontsize';
+import { fs } from './spacing';
 
-import env from '../config/env';
-
-export interface ITypography {
-  fontSize: {
-    tiny: number;
-    small: number;
-    medium: number;
-    big: number;
-    title: number;
-  };
-  fontWeight: {
-    '300': string;
-    '400': string;
-    '500': string;
-    '700': string;
-  };
+interface IFontSize {
+  hint: number;
+  description: number;
+  subtitle: number;
+  title: number;
+  hero: number;
 }
 
-export const fontSize = {
-  tiny: Number(RFValue(10, env.baseHeight).toFixed(2)),
-  small: Number(RFValue(14, env.baseHeight).toFixed(2)),
-  medium: Number(RFValue(16, env.baseHeight).toFixed(2)),
-  big: Number(RFValue(20, env.baseHeight).toFixed(2)),
-  title: Number(RFValue(24, env.baseHeight).toFixed(2)),
+interface IFontWeight {
+  '300': string;
+  '500': string;
+  '700': string;
+  '900': string;
+}
+
+export interface ITypography {
+  fontSize: IFontSize;
+  fontWeight: IFontWeight;
+}
+
+export const fontSize: IFontSize = {
+  hint: fs(12),
+  description: fs(14),
+  subtitle: fs(16),
+  title: fs(24),
+  hero: fs(32),
 };
 
-export const fontWeight = {
-  '300': 'Sora_300Light',
-  '400': 'Sora_400Regular',
-  '500': 'Sora_500Medium',
-  '700': 'Sora_700Bold',
+export const fontWeight: IFontWeight = {
+  '300': 'CeraPro-Light',
+  '500': 'CeraPro-Medium',
+  '700': 'CeraPro-Bold',
+  '900': 'CeraPro-Black',
 };
 
 export const typography: ITypography = {
